@@ -63,7 +63,7 @@ public class modio : ModuleRules
 			);
 		
 		PublicDependencyModuleNames.AddRange(
-			new string[]
+			new[]
 			{
 				"Core",
 				"CoreUObject",
@@ -103,16 +103,16 @@ public class modio : ModuleRules
 			string DLLPath = Path.Combine(ThirdPartyPath, modio_directory, "bin", "win64");
 
 			PublicSystemLibraryPaths.Add(LibrariesPath);
-			PublicAdditionalLibraries.Add("modio.lib");
+			PublicSystemLibraryPaths.Add("modio.lib");
 			RuntimeDependencies.Add(Path.Combine(DLLPath, "modio.dll"));
 
 			string ProjectBinariesDirectory = Path.Combine(ProjectPath, "Binaries", "Win64");
 			if (!Directory.Exists(ProjectBinariesDirectory))
-				System.IO.Directory.CreateDirectory(ProjectBinariesDirectory);
+				Directory.CreateDirectory(ProjectBinariesDirectory);
 			
-			string ModioDLLDestination = System.IO.Path.Combine(ProjectBinariesDirectory, "modio.dll");
+			string ModioDLLDestination = Path.Combine(ProjectBinariesDirectory, "modio.dll");
 			CopyFile(Path.Combine(DLLPath, "modio.dll"), ModioDLLDestination);
-			PublicDelayLoadDLLs.AddRange(new string[] { "modio.dll" });
+			PublicDelayLoadDLLs.AddRange(new[] { "modio.dll" });
 		}
 
 		if (Target.Platform == UnrealTargetPlatform.Linux)
@@ -124,11 +124,11 @@ public class modio : ModuleRules
 			string LibrariesPath = Path.Combine(ThirdPartyPath, modio_directory, "lib", "linux-x64");
 
 			PublicSystemLibraryPaths.Add(LibrariesPath);
-			PublicAdditionalLibraries.Add("modio");
+			PublicSystemLibraryPaths.Add("modio");
 
 			string ProjectBinariesDirectory = Path.Combine(ProjectPath, "Binaries", "Linux");
 			if (!Directory.Exists(ProjectBinariesDirectory))
-				System.IO.Directory.CreateDirectory(ProjectBinariesDirectory);
+				Directory.CreateDirectory(ProjectBinariesDirectory);
 		}
 
 		if (Target.Platform == UnrealTargetPlatform.Mac)
@@ -140,11 +140,11 @@ public class modio : ModuleRules
 			string LibrariesPath = Path.Combine(ThirdPartyPath, modio_directory, "lib", "macOS-x64");
 
 			PublicSystemLibraryPaths.Add(LibrariesPath);
-			PublicAdditionalLibraries.Add("modio");
+			PublicSystemLibraryPaths.Add("modio");
 
 			string ProjectBinariesDirectory = Path.Combine(ProjectPath, "Binaries", "Mac");
 			if (!Directory.Exists(ProjectBinariesDirectory))
-				System.IO.Directory.CreateDirectory(ProjectBinariesDirectory);
+				Directory.CreateDirectory(ProjectBinariesDirectory);
 		}
 		
 		if (isLibrarySupported)
@@ -160,18 +160,18 @@ public class modio : ModuleRules
 
 	private void CopyFile(string source, string dest)
 	{
-		System.Console.WriteLine("Copying {0} to {1}", source, dest);
-		if (System.IO.File.Exists(dest))
+		Console.WriteLine("Copying {0} to {1}", source, dest);
+		if (File.Exists(dest))
 		{
-			System.IO.File.SetAttributes(dest, System.IO.File.GetAttributes(dest) & ~System.IO.FileAttributes.ReadOnly);
+			File.SetAttributes(dest, File.GetAttributes(dest) & ~FileAttributes.ReadOnly);
 		}
 		try
 		{
-			System.IO.File.Copy(source, dest, true);
+			File.Copy(source, dest, true);
 		}
-		catch (System.Exception ex)
+		catch (Exception ex)
 		{
-			System.Console.WriteLine("Failed to copy file: {0}", ex.Message);
+			Console.WriteLine("Failed to copy file: {0}", ex.Message);
 		}
 	}
 }
