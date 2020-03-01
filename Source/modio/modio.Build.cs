@@ -21,7 +21,7 @@ public class modio : ModuleRules
 	
 	private string ThirdPartyPath
 	{
-		get { return Path.GetFullPath(Path.Combine(ModulePath, "../../Source/ThirdParty/")); }
+		get { return Path.GetFullPath(Path.Combine(ModuleDirectory, "../../Source/ThirdParty/")); }
 	}
 
 	public modio(ReadOnlyTargetRules Target) : base(Target)
@@ -102,8 +102,7 @@ public class modio : ModuleRules
 			string LibrariesPath = Path.Combine(ThirdPartyPath, modio_directory, "lib", "win64");
 			string DLLPath = Path.Combine(ThirdPartyPath, modio_directory, "bin", "win64");
 
-			PublicSystemLibraryPaths.Add(LibrariesPath);
-			PublicSystemLibraryPaths.Add("modio.lib");
+			PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "modio.lib"));
 			RuntimeDependencies.Add(Path.Combine(DLLPath, "modio.dll"));
 
 			string ProjectBinariesDirectory = Path.Combine(ProjectPath, "Binaries", "Win64");
