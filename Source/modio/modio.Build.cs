@@ -159,7 +159,6 @@ public class modio : ModuleRules
 
 	private void CopyFile(string source, string dest)
 	{
-		Console.WriteLine("Copying {0} to {1}", source, dest);
 		if (File.Exists(dest))
 		{
 			File.SetAttributes(dest, File.GetAttributes(dest) & ~FileAttributes.ReadOnly);
