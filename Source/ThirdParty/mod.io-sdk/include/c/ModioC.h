@@ -513,7 +513,7 @@ extern "C"
   };
 
   //General Methods
-  void MODIO_DLL modioInit(u32 environment, u32 game_id, bool retrieve_mods_from_other_games, char const* api_key, char const* root_path);
+  void MODIO_DLL modioInit(u32 environment, u32 game_id, bool retrieve_mods_from_other_games, bool polling_enabled, char const* api_key, char const* root_path);
   void MODIO_DLL modioShutdown(void);
   void MODIO_DLL modioSetDebugLevel(u32 debug_level);
   void MODIO_DLL modioSetModEventsPollInterval(u32 interval_in_seconds);
@@ -539,7 +539,7 @@ extern "C"
 
   //External Authentication Methods
   void MODIO_DLL modioGalaxyAuth(void* object, char const* appdata, void (*callback)(void* object, ModioResponse response));
-  void MODIO_DLL modioOculusAuth(void* object, char const* nonce, char const* oculus_user_id, char const* access_token, char const* email, u32 date_expires, void (*callback)(void* object, ModioResponse response));
+  void MODIO_DLL modioOculusAuth(void* object, char const* nonce, char const* oculus_user_id, char const* access_token, char const* email, char const* device, u32 date_expires, void (*callback)(void* object, ModioResponse response));
   void MODIO_DLL modioSteamAuth(void* object, unsigned char const* rgubTicket, u32 cubTicket, void (*callback)(void* object, ModioResponse response));
   void MODIO_DLL modioSteamAuthEncoded(void* object, char const* base64_ticket, void (*callback)(void* object, ModioResponse response));
   void MODIO_DLL modioLinkExternalAccount(void* object, u32 service, char const* service_id, char const* email, void (*callback)(void* object, ModioResponse response));
@@ -700,7 +700,8 @@ extern "C"
   u32 MODIO_DLL modioGetAllDownloadedModsCount(void);
   void MODIO_DLL modioGetAllDownloadedMods(u32* downloaded_mods);
   u32 MODIO_DLL modioGetModState(u32 mod_id);
-  void MODIO_DLL modioCheckIfModsAreUpdated(void* object, u32 const* mod_id_array, u32 mod_id_array_size, void(*callback)(void* object, ModioResponse response, bool mods_are_updated));
+  void MODIO_DLL modioDownloadModfilesById(void* object, u32 const* mod_id_array, u32 mod_id_array_size, void(*callback)(void* object, ModioResponse response, bool mods_are_updated));
+  void MODIO_DLL modioDownloadSubscribedModfiles(void* object, bool uninstall_unsubscribed, void(*callback)(void* object, ModioResponse response, bool mods_are_updated));
 
   //Dependencies Methods
   void MODIO_DLL modioGetAllModDependencies(void* object, u32 mod_id, void(*callback)(void* object, ModioResponse response, ModioDependency* dependencies_array, u32 dependencies_array_size));

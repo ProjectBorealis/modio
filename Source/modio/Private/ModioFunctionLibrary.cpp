@@ -101,6 +101,26 @@ void UModioFunctionLibrary::ModioDownloadMod(UObject *WorldContextObject, int32 
   }
 }
 
+void UModioFunctionLibrary::ModioPauseDownloads(UObject *WorldContextObject)
+{
+  UWorld* World = GEngine->GetWorldFromContextObject( WorldContextObject, EGetWorldErrorMode::LogAndReturnNull );
+  FModioSubsystemPtr Modio = FModioSubsystem::Get( World );
+  if( Modio.IsValid() )
+  {
+    Modio->PauseDownloads();
+  }
+}
+
+void UModioFunctionLibrary::ModioResumeDownloads(UObject *WorldContextObject)
+{
+  UWorld* World = GEngine->GetWorldFromContextObject( WorldContextObject, EGetWorldErrorMode::LogAndReturnNull );
+  FModioSubsystemPtr Modio = FModioSubsystem::Get( World );
+  if( Modio.IsValid() )
+  {
+    Modio->ResumeDownloads();
+  }
+}
+
 void UModioFunctionLibrary::ModioGetInstalledMod(UObject *WorldContextObject, int32 ModId, FString &Path, FModioMod &Mod)
 {
   UWorld* World = GEngine->GetWorldFromContextObject( WorldContextObject, EGetWorldErrorMode::LogAndReturnNull );
@@ -183,6 +203,16 @@ void UModioFunctionLibrary::ModioGetModState(UObject *WorldContextObject, int32 
   }else
   {
     ModState = EModioModState::NOT_DEFINED;
+  }
+}
+
+void UModioFunctionLibrary::ModioUninstallMod(UObject *WorldContextObject, int32 ModId, bool &SuccessfullyUninstalled)
+{
+  UWorld* World = GEngine->GetWorldFromContextObject( WorldContextObject, EGetWorldErrorMode::LogAndReturnNull );
+  FModioSubsystemPtr Modio = FModioSubsystem::Get( World );
+  if( Modio.IsValid() )
+  {
+    SuccessfullyUninstalled = Modio->UninstallMod(ModId);
   }
 }
 
