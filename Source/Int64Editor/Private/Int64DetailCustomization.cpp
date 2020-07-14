@@ -2,7 +2,9 @@
 // Released under MIT.
 
 #include "Int64DetailCustomization.h"
-#include "PropertyEditing.h"
+#include "IPropertyTypeCustomization.h"
+#include "PropertyHandle.h"
+#include "DetailWidgetRow.h"
 #include "Int64.h"
 #include "Widgets/SBoxPanel.h"
 #include "Input/SEditableTextBox.h"
